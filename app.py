@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
 
-app = Flask(__name__)
+app = Flask(__name__) 
 
 @app.route('/') # whenever the user opens this app, load the following function
 def index():
@@ -12,9 +12,25 @@ def index():
 def news():
     return render_template('news.html')
 
+# TASK: Create 3 more routes/pages
+@app.route('/photos')
+def photos():
+    return render_template('photos.html')
+
+@app.route('/recipes')
+def recipes():
+    return render_template('recipes.html')
+
+@app.route('/music')
+def music():
+    return render_template('music.html')
+
+
+
 #nm in the return statement above is a variable that can be used in html
 if __name__ == '__main__':
     app.run(debug = True) # run this server in a testing mode
     
 
 # Task: create 3 more pages (i.e. 3 more routes)
+# Note: TemplateNotFound Error raised when clicking 'Recipes Page' and 'Music Page' button

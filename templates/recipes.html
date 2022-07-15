@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block css %}{% endblock %}
+{% block content %}
+<h1>Recipes</h1>
+<P>Choose recipes from the following list</P>
+<div class="overflow-x-auto">
+    <table class="table w-full">
+      <!-- head -->
+      <thead>
+        <tr>
+          <th></th>
+          <th>Recipe</th>
+          <th>Cuisine</th>
+          <th>Ingredients</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- row 1 -->
+        <tr class="hover">
+          <th>1</th>
+          <td>Keema</td>
+          <td>Indian</td>
+          <td>Ground meat of your choice, tomatoes, spices, and love</td>
+        </tr>
+        <!-- row 2 -->
+        <tr class="hover">
+          <th>2</th>
+          <td>Quesadilla</td>
+          <td>Mexican</td>
+          <td>Tortillas, cheese, and veggies (optional)</td>
+        </tr>
+        <!-- row 3 -->
+        <tr class="hover">
+          <th>3</th>
+          <td>Spaghetti with Meatballs</td>
+          <td>Italian</td>
+          <td>Noodles, meat, and marinara sauce</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
+{% block js %}{% endblock %}
+<!-- Don't have to add all blocks if you're not using them. -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipes</title>
+</head>
+<body>
+    <h1>Choose from recipes here</h1>
+    <ol>
+        <li>Keema</li>
+        <li>Quesadilla</li>
+        <li>Spaghetti with Spinach and Tomatoes</li>
+        <li>
+            <a href="/">Home Page</a>
+        </li>
+    </o1>
+    
+</body>
+</html> -->

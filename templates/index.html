@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>My first web page </title>
-</head>
-<body>
-	Welcome to my code example
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Welcome to my code example</h1>
 	<p>Variable from server: {{nm}}</p>
 	<p style="color:red">{{task}}</p>
 	<p>
@@ -20,7 +18,4 @@
 		visit our <a href="/music">Music Page</a>
 	</p>
 	
-	
-
-</body>
-</html>
+{% endblock %}

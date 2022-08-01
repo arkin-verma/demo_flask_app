@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container mx-auto">
+<form method="post" >
+    <!-- sm here is the  size of item, we have options xs,sm,md,lg -->
+    <div class="form-control w-full max-w-sm">
+        <label class="label" for="fullname">
+          <span class="label-text">What is your name?</span>
+        </label>
+        <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-sm" name="fullname" id="fullname" />
+    </div>
+    <div class="form-control w-full max-w-xs">
+        <label class="label" for="email">
+          <span class="label-text">What is your Email?</span>
+        </label>
+        <input type="email" placeholder="Type email here" class="input input-bordered w-full max-w-xs" name="email" id="email" />
+    </div>
+    <div class="form-control w-full max-w-xs">
+        <label class="label" for="college">
+          <span class="label-text">What college u belong?</span>
+        </label>
+        <input type="text" placeholder="Type college here" class="input input-bordered w-full max-w-xs" name="college" id="college" />
+    </div>
+    <div class="form-control w-full max-w-xs">
+        <label class="label" for="password">
+          <span class="label-text">Create a new password</span>
+          <span class="label-text-alt">min 8 chars</span>
+        </label>
+        <input type="password" placeholder="Type password here" class="input input-bordered w-full max-w-xs" name="password" id="password" />
+    </div>
+    <div class="form-control w-full max-w-xs">
+        <label class="label" for="cpassword">
+          <span class="label-text">Confirm password again</span>
+          <span class="label-text-alt">min 8 chars</span>
+        </label>
+        <input type="password" placeholder="Type confirmation password here" class="input input-bordered w-full max-w-xs" name="cpassword" id="cpassword" />
+    </div>
+    <div class="form-control w-full max-w-xs my-3">
+        <button class="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg">Submit</button>
+    </div>
+</form>
+</div>
+{% endblock content %}
+        <!-- method="post" means nothing is visible to user -->
+        <!-- method="get" means this form is visible to the user. Not encrypted. -->
+        <!-- <label for="name">Name</label>
+        
+        <input type="text" name=""name" id="name">
+        <label for=""email">Email</label>
+        <input type="email" name="email" id="email">
+    </form> -->
+

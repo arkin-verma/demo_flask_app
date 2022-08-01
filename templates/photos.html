@@ -2,10 +2,41 @@
 
 {% block css %}{% endblock %}
 {% block content %}
-<h1> Welcome to Photos Page</h1>
-<P>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, ullam. Quas ab ipsa voluptatum architecto earum ullam ratione quo mollitia provident nihil. Laudantium quasi exercitationem architecto harum inventore officia reprehenderit.</P>
-<P>Repudiandae fugiat impedit mollitia reprehenderit quaerat rem numquam, facere tenetur illo, sequi ipsa ratione eaque aperiam aut dicta. Reprehenderit excepturi ipsum exercitationem ipsa consequuntur placeat, cum officiis sit iusto adipisci.</P>
-<P>Tempore atque assumenda qui perspiciatis at? Quae provident ea nam debitis! Adipisci ipsum aliquid omnis expedita eligendi eius assumenda ab corrupti architecto iusto nemo enim molestias voluptatibus, aut quis consequatur?</P>
+<style>
+    div{
+        outline: solid 1px #332;
+        color: white;
+    }
+    h1{
+        color: whitesmoke;
+        /* the following means the font size will be releated to your screen size */
+        font-size: 5rem; 
+        text-align: center;
+    }
+    p{
+        font-size: 1.2rem;
+    }
+    .section-1{
+        background-color:red;
+        font-size: 25;
+        /* ^ Why doesn't this change the font size of the heading? */
+    }
+
+    .section-2{
+        font-weight:bolder;
+    }
+
+</style>
+<h1> 
+    <div class="section-1">
+        Welcome to Photos Page
+    </div>
+</h1>
+<div class="section-2">
+    <P>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, ullam. Quas ab ipsa voluptatum architecto earum ullam ratione quo mollitia provident nihil. Laudantium quasi exercitationem architecto harum inventore officia reprehenderit.</P>
+    <P>Repudiandae fugiat impedit mollitia reprehenderit quaerat rem numquam, facere tenetur illo, sequi ipsa ratione eaque aperiam aut dicta. Reprehenderit excepturi ipsum exercitationem ipsa consequuntur placeat, cum officiis sit iusto adipisci.</P>
+    <P>Tempore atque assumenda qui perspiciatis at? Quae provident ea nam debitis! Adipisci ipsum aliquid omnis expedita eligendi eius assumenda ab corrupti architecto iusto nemo enim molestias voluptatibus, aut quis consequatur?</P>
+</div>
 {% endblock %}
 {% block js %}{% endblock %}
 <!-- Don't have to add all blocks if you're not using them. -->

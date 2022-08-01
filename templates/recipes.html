@@ -2,20 +2,30 @@
 
 {% block css %}{% endblock %}
 {% block content %}
+<style>
+
+	.section-1{
+	  text-decoration:line-through;
+    color:antiquewhite;
+	  font-weight: bolder;
+	  font-size: 15px;
+	};
+</style>
+
 <h1>Recipes</h1>
 <P>Choose recipes from the following list</P>
-<div class="overflow-x-auto">
+<div class="overflow-x-auto"; class="section-1">
     <table class="table w-full">
       <!-- head -->
       <thead>
         <tr>
           <th></th>
-          <th>Recipe</th>
-          <th>Cuisine</th>
-          <th>Ingredients</th>
+          <th class="section-1">Recipe</th>
+          <th class="section-1">Cuisine</th>
+          <th class="section-1">Ingredients</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="section-1">
         <!-- row 1 -->
         <tr class="hover">
           <th>1</th>
@@ -24,14 +34,14 @@
           <td>Ground meat of your choice, tomatoes, spices, and love</td>
         </tr>
         <!-- row 2 -->
-        <tr class="hover">
+        <tr class="hover section-1">
           <th>2</th>
           <td>Quesadilla</td>
           <td>Mexican</td>
           <td>Tortillas, cheese, and veggies (optional)</td>
         </tr>
         <!-- row 3 -->
-        <tr class="hover">
+        <tr class="hover section-1">
           <th>3</th>
           <td>Spaghetti with Meatballs</td>
           <td>Italian</td>

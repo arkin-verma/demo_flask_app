@@ -2,20 +2,30 @@
 
 {% block content %}
 
+<style>
+	.section-1{
+	  text-decoration:dotted;
+	  font-family: Lucida Sans;
+	  font-size: 20px;
+	};
+</style>
+
 <h1>Welcome to my code example</h1>
 	<p>Variable from server: {{nm}}</p>
 	<p style="color:red">{{task}}</p>
-	<p>
+	<p class="section-1">
 		visit our <a href="/news">News Page</a>
 	</p>
-	<p>
+	<p class="section-1">
 		visit our <a href="/photos">Photos Page</a>
 	</p>
-	<p>
+	<p class="section-1">
 		visit our <a href="/recipes">Recipes Page</a>
 	</p>
-	<p>
+	<p class="section-1">
 		visit our <a href="/music">Music Page</a>
 	</p>
 	
+<!-- changes not appearing here -->
+
 {% endblock %}

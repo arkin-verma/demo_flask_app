@@ -1,10 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<style>
+.section-1{
+  text-decoration: underline;
+};
+</style>
+
 <div class="card lg:card-side bg-base-100 shadow-xl">
     <figure><img src="https://cdn.drawception.com/images/panels/2016/11-8/d8QgRhyDLx-4.png" alt="Album"></figure>
     <div class="card-body">
-      <h2 class="card-title">New album is released!</h2>
+      <h2 class="card-title"; class="section-1">New album is released!
+        <!-- How do I underline this title? -->
+      </h2>
       <p>Click the button to listen on Spotify app.</p>
       <div class="card-actions justify-end">
         <button class="btn btn-primary">Listen</button>

@@ -23,6 +23,13 @@
                 <li><a href="/photos">Photos</a></li>
                 <li><a href="/recipes">Recipes</a></li>
                 <li><a href="/music">Music</a></li>
+                <li><a href="/design_basics">Design Basics</a></li>
+                <li><a href="/form1">Form 1</a></li>
+                <li><a href="/form2">Form 2</a></li>
+                <li><a href="/form3">Form 3</a></li>
+                <li><a href="/form4">Form 4</a></li>
+
+
             </ul>
           </div>
           <a class="btn btn-ghost normal-case text-xl">My Website</a>
@@ -34,6 +41,11 @@
             <li><a href="/photos">Photos</a></li>
             <li><a href="/recipes">Recipes</a></li>
             <li><a href="/music">Music</a></li>
+            <li><a href="/design_basics">Design Basics</a></li>
+            <li><a href="/form1">Form 1</a></li>
+            <li><a href="/form2">Form 2</a></li>
+            <li><a href="/form3">Form 3</a></li>
+            <li><a href="/form4">Form 4</a></li>
           </ul>
         </div>
         <div class="navbar-end">
@@ -44,6 +56,22 @@
     {% block content %}{% endblock %}
 
     <!-- JS Section -->
-    {% block js %}{% endblock %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    {% block js %}
+    <script>
+      //if the page is loaded, then handle JavaScript coding
+      $(function (){
+        let form1 = $('#form1');
+        // when the form is submitted, handle the form data
+        form1.on('submit', (event)=>{
+          event.preventDefault();
+          
+        })
+        console.log(form1);
+      })
+
+    </script>
+    
+    {% endblock %}
 </body>
 </html>

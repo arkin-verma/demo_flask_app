@@ -52,10 +52,12 @@ def form3_handler():
     return render_template('form_3.html')
 
 # submits form asynchronously. Form is submitted to this function and page won't be reloaded.
-@app.route('/form_ajax',methods=['POST'])
-def form1_ajax_handler():
+@app.route('/form3_ajax',methods=['POST'])
+def form3_ajax_handler():
     name = request.form.get('fullname')
     email = request.form.get('email')
+    college = request.form.get('college')
+    password = request.form.get('password')
     return jsonify({'status':'success'})
 
 @app.route('/form4', methods=['GET', 'POST'])
@@ -66,6 +68,11 @@ def form4_handler():
         print("We got", name)
         # name = request.form.get('name')
     return render_template('form_4.html')
+
+@app.route('/form4_ajax',methods=['POST'])
+def form4_ajax_handler():
+    specialName = request.form.get('name')
+    return jsonify({'status':'success'})
 
 
 #nm in the return statement above is a variable that can be used in html

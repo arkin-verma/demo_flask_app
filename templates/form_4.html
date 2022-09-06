@@ -13,4 +13,26 @@
         <input type="submit" class="btn">
         </form>
     </div>
+
+    {% block js %}
+    <script>
+      // if the page is loaded
+      $(function () {
+        let form1 = $('#form3');
+        // when the form is submitted, handle the form data
+        form1.on('submit', (event) => {
+          event.preventDefault();
+          url = '/form3_ajax'
+          $.ajax({
+            url: url,
+            type: 'POST',
+            data: form1.serialize(),
+            success: function (data) {
+              console.log(data);
+            }
+          });
+        })
+      });
+    </script>
+    {% endblock %}
 {% endblock content %}

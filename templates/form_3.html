@@ -21,6 +21,29 @@
 </form>
 </div>
 {% endblock content %}
+
+{% block js %}
+<script>
+  // if the page is loaded
+  $(function () {
+    let form1 = $('#form3');
+    // when the form is submitted, handle the form data
+    form1.on('submit', (event) => {
+      event.preventDefault();
+      url = '/form3_ajax'
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: form1.serialize(),
+        success: function (data) {
+          console.log(data);
+        }
+      });
+    })
+  });
+</script>
+{% endblock %}
+
         <!-- method="post" means nothing is visible to user -->
         <!-- method="get" means this form is visible to the user. Not encrypted. -->
         <!-- <label for="name">Name</label>

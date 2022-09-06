@@ -1,36 +1,102 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, session, flash, redirect, url_for
+from sqlalchemy.orm import sessionmaker
+from database import Base, User, ReviewData, create_engine, DATABASE_PATH
+import spider
 
-app = Flask(__name__) 
+
+app = Flask(__name__)
+app.secret_key = '1s2i3104u83faujsud'
+
+def connect_db():
+    engine = create_engine(DATABASE_PATH)
+    DBSession = sessionmaker(bind=engine)
+    return DBSession()
 
 @app.route('/') # whenever the user opens this app, load the following function
 def index():
     name = "Python Flask Famework"
     task = f"Create a web application using {name}"
-    return render_template('index.html', nm = name,task=task) # checks if this file exists
+    return render_template('index.html', nm=name,task=task) # checks if this file exists
 
-@app.route('/news')
-def news():
-    return render_template('news.html')
+@app.route('/login')
+def login_form():
+    next = request.args.get('next', '/')
+    return render_template('login.html', nextaddr=next)
 
-# TASK: Create 3 more routes/pages
-@app.route('/photos')
-def photos():
-    return render_template('photos.html')
+@app.route('/login_api', methods=['POST']) 
+def login_api():
+    email = request.form.get('email')
+    password = request.form.get('password')
+    if len(email) == 0 or len(password) == 0:
+        return jsonify({"message": "Please enter email and password", 'status':'error'})
+    elif len(email)<10 or '@' not in email:
+        return jsonify({"message": "Please enter a valid email", 'status':'error'})
+    else:
+        db = connect_db()
+        user = db.query(User).filter_by(email=email).first()
+        if user is None:
+            db.close()
+            return jsonify({"message": "User not found", 'status':'error'})
+        elif user.password != password:
+            db.close()
+            return jsonify({"message": "Incorrect password", 'status':'error'})
+        else:
+            session['user_id'] = user.id
+            session['user_email'] = user.email
+            session['is_logged_in'] = True
+            db.close()
+            return jsonify({'status':"success", "message":"Login successful"})
 
-@app.route('/recipes')
-def recipes():
-    return render_template('recipes.html')
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
 
-@app.route('/music')
-def music():
-    return render_template('music.html')
+@app.route('/register_api',methods=['POST'])
+def register_ajax_handler():
+    name = request.form.get('username')
+    email = request.form.get('email')
+    password = request.form.get('password')
+    cpassword = request.form.get('cpassword')
+    if len(name)<3:
+        return jsonify({"status":"error","message":"Username must be atleast 3 characters"})
+    elif len(email)<    10 or '@' not in email:
+        return jsonify({"status":"error","message":"Invalid email"})
+    elif len(password)<6:
+        return jsonify({"status":"error","message":"Password must be atleast 6 characters"})
+    elif password != cpassword:
+        return jsonify({"status":"error","message":"Passwords do not match"})
+    else:
+        db = connect_db()
+        user = User(name=name,email=email,password=password)
+        db.add(user)
+        db.commit()
+        db.close()
+        return jsonify({"status":"success","message":"User created successfully"})
 
-@app.route('/design_basics')
-def design_basics():
-    return render_template('design_basics.html')
+# @app.route('/news')
+# def news():
+#     return render_template('news.html')
 
-@app.route('/form1', methods=['GET', 'POST'])
-def form1_handler():
+# # TASK: Create 3 more routes/pages
+# @app.route('/photos')
+# def photos():
+#     return render_template('photos.html')
+
+# @app.route('/recipes')
+# def recipes():
+#     return render_template('recipes.html')
+
+# @app.route('/music')
+# def music():
+#     return render_template('music.html')
+
+# @app.route('/design_basics')
+# def design_basics():
+#     return render_template('design_basics.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register_handler():
     return render_template('form_1.html')
 
 @app.route('/form2', methods=['GET', 'POST'])
@@ -52,13 +118,28 @@ def form3_handler():
     return render_template('form_3.html')
 
 # submits form asynchronously. Form is submitted to this function and page won't be reloaded.
+# Ajax is used for front-end and sending data from the front end.
+# Asynchronously.
 @app.route('/form3_ajax',methods=['POST'])
 def form3_ajax_handler():
-    name = request.form.get('fullname')
-    email = request.form.get('email')
-    college = request.form.get('college')
-    password = request.form.get('password')
-    return jsonify({'status':'success'})
+    name = request.form.get('data1')
+    email = request.form.get('data2')
+    college = request.form.get('data3')
+    password = request.form.get('data4')
+
+    if len(name) < 3:
+        return jsonify({"status":"error", "message": "Username must be at least 3 characters"})
+    
+    elif len(email) < 10:
+        pass # COME BACK TO THIS
+
+    else:
+        db = connect_db()
+        user = User(name=name, email=email, password=password)
+        db.add(user)
+        db.commit()
+        db.close()
+        return jsonify({'status':'success', "message":"User created successfully"})
 
 @app.route('/form4', methods=['GET', 'POST'])
 def form4_handler():
@@ -74,11 +155,42 @@ def form4_ajax_handler():
     specialName = request.form.get('name')
     return jsonify({'status':'success'})
 
+@app.route('/startmining',methods=['GET','POST'])
+def start_mining():
+    if 'is_logged_in' not in session:
+        flash('Please login to start mining')
+        return redirect('/login?next=startmining')
+    return render_template('start_mining.html')
+
+@app.route('/scrapper_api',methods=['POST'])
+def scrapper_api():
+    if 'is_logged_in' not in session:
+        return jsonify({"status":"error","message":"Please login to start mining"})
+    else:
+        url = request.form.get('product_url')
+        if 'amazon' not in url: # url validation should be fixed,not the best
+            return jsonify({"status":"error","message":"Please enter a valid url"})
+        else:
+            # call scrapper function
+            # save the result in database
+            reviewLink = spider.get_review_link(url)
+
+            allReviews = spider.collect_reviews(reviewLink)
+
+            spider.save_reviews(allReviews)
+
+            return jsonify({"status":"success","message":"Product scrapped successfully"})
 
 #nm in the return statement above is a variable that can be used in html
 if __name__ == '__main__':
     app.run(debug = True) # run this server in a testing mode
     
+# Tasks
+# Clean up UI
+# Fill out login information - remove old things that I tested, or make a simple page
+# and not remove everything
 
-# Task: create 3 more pages (i.e. 3 more routes)
-# Note: TemplateNotFound Error raised when clicking 'Recipes Page' and 'Music Page' button
+# Notes
+# jsonify: asynchronous (sending chunks of information without reloading the page) sending to form. Handled by JavaScript
+# sending tiny bit of data back to server from the client
+# Fix the UI on the pages (specifically the front page)

@@ -3,52 +3,98 @@
 
 {% block content %}
 <div class="container mx-auto">
-<form method="post" >
+  <form method="post" id="form1" class="mx-auto">
     <!-- sm here is the  size of item, we have options xs,sm,md,lg -->
-    <div class="form-control w-full max-w-sm">
-        <label class="label" for="fullname">
-          <span class="label-text">What is your name?</span>
-        </label>
-        <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-sm" name="fullname" id="fullname" />
+    <div class="form-control w-full max-w-xs">
+      <label class="label" for="fullname">
+        <span class="label-text">Username</span>
+      </label>
+      <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-sm" name="username"
+        id="fullname" />
     </div>
     <div class="form-control w-full max-w-xs">
-        <label class="label" for="email">
-          <span class="label-text">What is your Email?</span>
-        </label>
-        <input type="email" placeholder="Type email here" class="input input-bordered w-full max-w-xs" name="email" id="email" />
+      <label class="label" for="email">
+        <span class="label-text">Email Address</span>
+      </label>
+      <input type="email" placeholder="Type email here" class="input input-bordered w-full max-w-xs" name="email"
+        id="email" />
     </div>
     <div class="form-control w-full max-w-xs">
-        <label class="label" for="college">
-          <span class="label-text">What college u belong?</span>
-        </label>
-        <input type="text" placeholder="Type college here" class="input input-bordered w-full max-w-xs" name="college" id="college" />
+      <label class="label" for="password">
+        <span class="label-text">Create a new password</span>
+        <span class="label-text-alt">min 8 chars</span>
+      </label>
+      <input type="password" placeholder="Type password here" class="input input-bordered w-full max-w-xs"
+        name="password" id="password" />
     </div>
     <div class="form-control w-full max-w-xs">
-        <label class="label" for="password">
-          <span class="label-text">Create a new password</span>
-          <span class="label-text-alt">min 8 chars</span>
-        </label>
-        <input type="password" placeholder="Type password here" class="input input-bordered w-full max-w-xs" name="password" id="password" />
-    </div>
-    <div class="form-control w-full max-w-xs">
-        <label class="label" for="cpassword">
-          <span class="label-text">Confirm password again</span>
-          <span class="label-text-alt">min 8 chars</span>
-        </label>
-        <input type="password" placeholder="Type confirmation password here" class="input input-bordered w-full max-w-xs" name="cpassword" id="cpassword" />
+      <label class="label" for="cpassword">
+        <span class="label-text">Confirm password again</span>
+        <span class="label-text-alt">min 8 chars</span>
+      </label>
+      <input type="password" placeholder="Type confirmation password here" class="input input-bordered w-full max-w-xs"
+        name="cpassword" id="cpassword" />
     </div>
     <div class="form-control w-full max-w-xs my-3">
-        <button class="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg">Submit</button>
+      <button class="btn btn-xs sm:btn-sm md:btn-md">Register</button>
+      <progress class="progress w-full max-w-xs my-1 invisible" id="form-progress"></progress>
     </div>
-</form>
+  </form>
 </div>
 {% endblock content %}
-        <!-- method="post" means nothing is visible to user -->
-        <!-- method="get" means this form is visible to the user. Not encrypted. -->
-        <!-- <label for="name">Name</label>
-        
-        <input type="text" name=""name" id="name">
-        <label for=""email">Email</label>
-        <input type="email" name="email" id="email">
-    </form> -->
+
+{% block js %}
+<script>
+  // if the page is loaded
+  $(function () {
+    let form1 = $('#form1');
+    let pb = $('#form-progress');
+    // when the form is submitted, handle the form data
+    form1.on('submit', (event) => {
+      event.preventDefault();
+      pb.removeClass('invisible');
+      url = '/register_api'
+      // add a delay for 2 sec
+      setTimeout(() => {
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: form1.serialize(),
+          success: function (data) {
+            status = data.status;
+            message = data.message;
+            console.log(data);
+            pb.addClass('invisible');
+            if (status == 'success') {
+              Swal.fire(
+                'Good job!',
+                message,
+                'success'
+              )
+              form1.clearForm();
+            }
+            else {
+              Swal.fire(
+                'Oops...',
+                message,
+                'error'
+              )
+            }
+           
+          },
+          error: function (data) {
+            console.log(data);
+            Swal.fire(
+              'Error!',
+              'There was an error',
+              'error'
+            )
+          }
+
+        });
+      }, 2000);
+    })
+  });
+</script>
+{% endblock %}
 

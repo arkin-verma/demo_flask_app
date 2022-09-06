@@ -3,53 +3,76 @@
 
 {% block content %}
 <div class="container mx-auto">
-<form method="post" >
-   
-    <!-- xs -->
-    <div><input type="text" placeholder="Type here" name="data1" class="input input-bordered input-accent w-full max-w-xs" /></div>
-
-    <!-- sm -->
-    <div><input type="text" placeholder="Type here" name="data2" class="input input-bordered input-info w-full max-w-xs" /></div>
-    
-    <div><input type="text" placeholder="Type here" name="data3" class="input input-bordered input-success w-full max-w-xs" /></div>
-
-    <div><input type="text" placeholder="Type here" name="data4" class="input input-bordered input-warning w-full max-w-xs" /></div>
-    
-    <div class="form-control w-full max-w-xs my-3">
-        <button class="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg">Submit</button>
-    </div>
-</form>
+    <form method="post" id="form3">
+        
+        <!-- xs -->
+        <div><input type="text" placeholder="Type here" name="data1" class="input input-bordered input-accent w-full max-w-xs" /></div>
+        
+        <!-- sm -->
+        <div><input type="text" placeholder="Type here" name="data2" class="input input-bordered input-info w-full max-w-xs" /></div>
+        
+        <div><input type="text" placeholder="Type here" name="data3" class="input input-bordered input-success w-full max-w-xs" /></div>
+        
+        <div><input type="text" placeholder="Type here" name="data4" class="input input-bordered input-warning w-full max-w-xs" /></div>
+        
+        <div class="form-control w-full max-w-xs my-3">
+            <button class="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg">Submit</button>
+            <progress class="progress w-full max-w-xs my-1 invisible progress-primary" id="form-progress"></progress>
+        </div>
+    </form>
 </div>
 {% endblock content %}
 
 {% block js %}
 <script>
-  // if the page is loaded
-  $(function () {
-    let form1 = $('#form3');
-    // when the form is submitted, handle the form data
-    form1.on('submit', (event) => {
-      event.preventDefault();
-      url = '/form3_ajax'
-      $.ajax({
-        url: url,
-        type: 'POST',
-        data: form1.serialize(),
-        success: function (data) {
-          console.log(data);
-        }
-      });
-    })
-  });
+    // if the page is loaded
+    $(function () {
+        let form1 = $('#form3');
+        let pb = $('#form-progress');
+        // when the form is submitted, handle the form data
+        form1.on('submit', (event) => {
+            event.preventDefault();
+            pb.removeClass('invisible');
+            url = '/form3_ajax'
+            // add a delay for 2 seconds
+            setTimeout(() => {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: form1.serialize(),
+                    success: function (data) {
+                        console.log(data);
+                        pb.addClass('invisible');
+                        Swal.fire(
+                        'Good Job!',
+                        'You clicked the button',
+                        'success'
+                        )
+                    },
+                    
+                    error: function (data) {
+                        consolde.log(data);
+                        Swal.fire(
+                        'Error!',
+                        'There was an error',
+                        'error'
+                        )
+                    }
+                    
+                })
+                
+            },2000);
+        })
+    });
 </script>
 {% endblock %}
 
-        <!-- method="post" means nothing is visible to user -->
-        <!-- method="get" means this form is visible to the user. Not encrypted. -->
-        <!-- <label for="name">Name</label>
-        
-        <input type="text" name=""name" id="name">
-        <label for=""email">Email</label>
-        <input type="email" name="email" id="email">
-    </form> -->
+<!-- method="post" means nothing is visible to user -->
+<!-- method="get" means this form is visible to the user. Not encrypted. -->
+<!-- <label for="name">Name</label>
+    
+    <input type="text" name=""name" id="name">
+    <label for=""email">Email</label>
+    <input type="email" name="email" id="email">
+</form> -->
 

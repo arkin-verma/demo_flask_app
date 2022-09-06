@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="cupcake">
 <head>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@2.19.0/dist/full.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Website</title>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {% block css %}{% endblock %}
 </head>
 <body>
@@ -19,59 +20,54 @@
             </label>
             <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                 <li><a href="/">Home</a></li>
-                <li><a href="/news">News</a></li>
-                <li><a href="/photos">Photos</a></li>
-                <li><a href="/recipes">Recipes</a></li>
-                <li><a href="/music">Music</a></li>
-                <li><a href="/design_basics">Design Basics</a></li>
-                <li><a href="/form1">Form 1</a></li>
                 <li><a href="/form2">Form 2</a></li>
                 <li><a href="/form3">Form 3</a></li>
                 <li><a href="/form4">Form 4</a></li>
-
+                <li><a href="/register">Register</a></li>
+                <li><a href="/login">Login</a></li>
 
             </ul>
           </div>
-          <a class="btn btn-ghost normal-case text-xl">My Website</a>
+          <a class="btn btn-ghost normal-case text-xl">Data Mining</a>
         </div>
         <div class="navbar-center hidden lg:flex">
           <ul class="menu menu-horizontal p-0">
             <li><a href="/">Home</a></li>
-            <li><a href="/news">News</a></li>
-            <li><a href="/photos">Photos</a></li>
+
+            {% if session.is_logged_in %}
+            <!-- <li><a href="/news">News</a></li> -->
+            <!-- <li><a href="/photos">Photos</a></li>
             <li><a href="/recipes">Recipes</a></li>
             <li><a href="/music">Music</a></li>
-            <li><a href="/design_basics">Design Basics</a></li>
-            <li><a href="/form1">Form 1</a></li>
+            <li><a href="/design_basics">Design Basics</a></li> -->
+            <li>
+              <a href="/logout">Logout</a>
+            </li>
+            {% else %}
+            <li>
+              <a href="/register">Register</a>
+            </li>
+            <li>
+              <a href="/login">Login</a>
+            </li>
             <li><a href="/form2">Form 2</a></li>
             <li><a href="/form3">Form 3</a></li>
             <li><a href="/form4">Form 4</a></li>
+
+            {% endif %}
           </ul>
         </div>
         <div class="navbar-end">
-          <a class="btn">Get started</a>
+          <a class="btn" href="/startmining">Start Data Mining!</a>
         </div>
       </div>
     <!-- end navigation bar area -->
-    {% block content %}{% endblock %}
+  {% block content %}{% endblock %}
 
-    <!-- JS Section -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    {% block js %}
-    <script>
-      //if the page is loaded, then handle JavaScript coding
-      $(function (){
-        let form1 = $('#form1');
-        // when the form is submitted, handle the form data
-        form1.on('submit', (event)=>{
-          event.preventDefault();
-          
-        })
-        console.log(form1);
-      })
-
-    </script>
-    
-    {% endblock %}
+  <!-- JS section -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  {% block js %}{% endblock %}
 </body>
+
 </html>

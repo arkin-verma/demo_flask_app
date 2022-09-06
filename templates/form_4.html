@@ -3,7 +3,7 @@
 {% block content%}
 
     <div class=""container">
-        <form method="post" >
+        <form method="post" id="form4">
         <div class="form-control w-full max-w-sm">
             <label class="label" for="fullname">
               <span class="label-text">What is your name?</span>
@@ -18,11 +18,11 @@
     <script>
       // if the page is loaded
       $(function () {
-        let form1 = $('#form3');
+        let form1 = $('#form4');
         // when the form is submitted, handle the form data
         form1.on('submit', (event) => {
           event.preventDefault();
-          url = '/form3_ajax'
+          url = '/form4_ajax'
           $.ajax({
             url: url,
             type: 'POST',

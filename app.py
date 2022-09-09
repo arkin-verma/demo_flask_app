@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template, session, flash, redirect, url_for
+from flask import Flask, jsonify, request, render_template, session, flash, redirect, url_for, send_file
 from sqlalchemy.orm import sessionmaker
 from database import Base, User, ReviewData, create_engine, DATABASE_PATH
 import spider
@@ -74,26 +74,6 @@ def register_ajax_handler():
         db.close()
         return jsonify({"status":"success","message":"User created successfully"})
 
-# @app.route('/news')
-# def news():
-#     return render_template('news.html')
-
-# # TASK: Create 3 more routes/pages
-# @app.route('/photos')
-# def photos():
-#     return render_template('photos.html')
-
-# @app.route('/recipes')
-# def recipes():
-#     return render_template('recipes.html')
-
-# @app.route('/music')
-# def music():
-#     return render_template('music.html')
-
-# @app.route('/design_basics')
-# def design_basics():
-#     return render_template('design_basics.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register_handler():
@@ -202,17 +182,20 @@ def scrapper_api():
             # First box: # of reviews limit
             # Second box: File name
 
+@app.route('/dashboard')
+def dashboard():
+    if 'is_logged_in' not in session:
+        return redirect('/login')
+    db = connect_db()
+    reviewData = db.query(ReviewData).filter(ReviewData.user_id==session['user_id']).all()
+    db.close()
+    return render_template('dashboard.html',data= reviewData)
 
-#nm in the return statement above is a variable that can be used in html
+@app.route('/download/<path:filename>', methods=['GET','POST'])
+def downloadFile(filename):
+    print(filename)
+    return send_file(filename, as_attachment=True)
+
 if __name__ == '__main__':
     app.run(debug = True) # run this server in a testing mode
     
-# Tasks
-# Clean up UI
-# Fill out login information - remove old things that I tested, or make a simple page
-# and not remove everything
-
-# Notes
-# jsonify: asynchronous (sending chunks of information without reloading the page) sending to form. Handled by JavaScript
-# sending tiny bit of data back to server from the client
-# Fix the UI on the pages (specifically the front page)

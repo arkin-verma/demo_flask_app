@@ -168,6 +168,11 @@ def scrapper_api():
         return jsonify({"status":"error","message":"Please login to start mining"})
     else:
         url = request.form.get('product_url')
+        name = request.form.get('product_title')
+        userLimit = int(request.form.get('page_limit'))
+
+        # print('LOOK:', url, name, userLimit)
+
         if 'amazon' not in url: # url validation should be fixed,not the best
             return jsonify({"status":"error","message":"Please enter a valid url"})
         else:
@@ -175,11 +180,28 @@ def scrapper_api():
             # save the result in database
             reviewLink = spider.get_review_link(url)
 
-            allReviews = spider.collect_reviews(reviewLink)
+            allReviews = spider.collect_reviews(reviewLink, limit = userLimit)
+            if allReviews == None:
+                return jsonify({"status":'error', "message": f'No reviews were collected from {reviewLink}'})
+            if len(allReviews) == 0:
+                return jsonify({"status":'error', "message": 'No reviews were collected'})
+            print(len(allReviews))
+            fileAddress = spider.save_reviews(allReviews, filename = name+'.json')
 
-            spider.save_reviews(allReviews)
+            db = connect_db()
+            reviewData = ReviewData(user_id=session['user_id'], product_url=reviewLink, filepath=fileAddress) 
+            db.add(reviewData)
+            db.commit()
+            db.close()
 
-            return jsonify({"status":"success","message":"Product scrapped successfully"})
+            return jsonify({"status":"success","message":"Product mined successfully"})
+
+            #DEBUGGING HELP: committing changes to SQLite, finding user_id to add to reviewData
+            # - Success window is not popping up after data is mined
+
+            # First box: # of reviews limit
+            # Second box: File name
+
 
 #nm in the return statement above is a variable that can be used in html
 if __name__ == '__main__':

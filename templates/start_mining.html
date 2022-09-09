@@ -7,10 +7,24 @@
         <!-- sm here is the  size of item, we have options xs,sm,md,lg -->
         <h1>Collect Reviews of Product from Amazon</h1>
         <div class="form-control w-full">
+            <label class="label" for="product_title">
+                <span class="label-text">Product Title</span>
+            </label>
+            <input type="name" placeholder="Type Product Title here" class="input input-bordered w-full max-w-xs" name="product_title"
+                id="product_title" />
+        </div>
+        <div class="form-control w-full">
+            <label class="label" for="page_limit">
+                <span class="label-text">Page Limit</span>
+            </label>
+            <input type="limit" placeholder="Type Page Limit here" class="input input-bordered w-full max-w-xs" name="page_limit"
+                id="page_limit" />
+        </div>
+        <div class="form-control w-full">
             <label class="label" for="product_url">
                 <span class="label-text">Product URL</span>
             </label>
-            <input type="url" placeholder="Type Product Url here" class="input input-bordered w-full max-w-xs" name="product_url"
+            <input type="url" placeholder="Type Product URL here" class="input input-bordered w-full max-w-xs" name="product_url"
                 id="product_url" />
         </div>
         <div class="form-control w-full max-w-xs my-3">
@@ -32,10 +46,14 @@
             event.preventDefault();
             pb.removeClass('invisible');
             url = '/scrapper_api'
+            name = '/scrapper_api'
+            limit = '/scrapper_api'
             // add a delay for 2 sec
             setTimeout(() => {
                 $.ajax({
                     url: url,
+                    name: name,
+                    limit: limit,
                     type: 'POST',
                     data: form1.serialize(),
                     success: function (data) {
@@ -44,7 +62,11 @@
                         console.log(data);
                         pb.addClass('invisible');
                         if (status == 'success') {
-                            window.location.href = '{{nextaddr}}';
+                            Swal.fire(
+                                'Success',
+                                message,
+                                'success'
+                            )
                         }
                         else {
                             Swal.fire(

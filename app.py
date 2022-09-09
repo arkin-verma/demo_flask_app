@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template, session, flash, redirect, url_for
+from flask import Flask, jsonify, request, render_template, session, flash, redirect, url_for, send_file
 from sqlalchemy.orm import sessionmaker
 from database import Base, User, ReviewData, create_engine, DATABASE_PATH
 import spider
@@ -74,48 +74,27 @@ def register_ajax_handler():
         db.close()
         return jsonify({"status":"success","message":"User created successfully"})
 
-# @app.route('/news')
-# def news():
-#     return render_template('news.html')
-
-# # TASK: Create 3 more routes/pages
-# @app.route('/photos')
-# def photos():
-#     return render_template('photos.html')
-
-# @app.route('/recipes')
-# def recipes():
-#     return render_template('recipes.html')
-
-# @app.route('/music')
-# def music():
-#     return render_template('music.html')
-
-# @app.route('/design_basics')
-# def design_basics():
-#     return render_template('design_basics.html')
-
 @app.route('/register', methods=['GET', 'POST'])
 def register_handler():
     return render_template('form_1.html')
 
-@app.route('/form2', methods=['GET', 'POST'])
-def form2_handler():
-    return render_template('form_2.html')
+# @app.route('/form2', methods=['GET', 'POST'])
+# def form2_handler():
+#     return render_template('form_2.html')
 
-@app.route('/form3', methods=['GET', 'POST'])
-def form3_handler():
-    if request.method == "POST":
-        d1 = request.form.get('data1')
-        d2 = request.form.get('data2')
-        d3 = request.form.get('data3')
-        d4 = request.form.get('data4')
-        with open('form3Data.txt', 'w') as f:
-            f.write(d1+'\n')
-            f.write(d2+'\n')
-            f.write(d3+'\n')
-            f.write(d4+'\n')
-    return render_template('form_3.html')
+# @app.route('/form3', methods=['GET', 'POST'])
+# def form3_handler():
+#     if request.method == "POST":
+#         d1 = request.form.get('data1')
+#         d2 = request.form.get('data2')
+#         d3 = request.form.get('data3')
+#         d4 = request.form.get('data4')
+#         with open('form3Data.txt', 'w') as f:
+#             f.write(d1+'\n')
+#             f.write(d2+'\n')
+#             f.write(d3+'\n')
+#             f.write(d4+'\n')
+#     return render_template('form_3.html')
 
 # submits form asynchronously. Form is submitted to this function and page won't be reloaded.
 # Ajax is used for front-end and sending data from the front end.
@@ -124,7 +103,7 @@ def form3_handler():
 def form3_ajax_handler():
     name = request.form.get('data1')
     email = request.form.get('data2')
-    college = request.form.get('data3')
+    # college = request.form.get('data3')
     password = request.form.get('data4')
 
     if len(name) < 3:
@@ -141,19 +120,19 @@ def form3_ajax_handler():
         db.close()
         return jsonify({'status':'success', "message":"User created successfully"})
 
-@app.route('/form4', methods=['GET', 'POST'])
-def form4_handler():
-    if request.method == "POST":
-        print(request.form.keys())
-        name = request.form.get('Data_Value')
-        print("We got", name)
-        # name = request.form.get('name')
-    return render_template('form_4.html')
+# @app.route('/form4', methods=['GET', 'POST'])
+# def form4_handler():
+#     if request.method == "POST":
+#         print(request.form.keys())
+#         name = request.form.get('Data_Value')
+#         print("We got", name)
+#         # name = request.form.get('name')
+#     return render_template('form_4.html')
 
-@app.route('/form4_ajax',methods=['POST'])
-def form4_ajax_handler():
-    specialName = request.form.get('name')
-    return jsonify({'status':'success'})
+# @app.route('/form4_ajax',methods=['POST'])
+# def form4_ajax_handler():
+#     specialName = request.form.get('name')
+#     return jsonify({'status':'success'})
 
 @app.route('/startmining',methods=['GET','POST'])
 def start_mining():
@@ -196,21 +175,24 @@ def scrapper_api():
 
             return jsonify({"status":"success","message":"Product mined successfully"})
 
-            #DEBUGGING HELP: committing changes to SQLite, finding user_id to add to reviewData
-            # - Success window is not popping up after data is mined
+@app.route('/dashboard')
+def dashboard():
+    if 'is_logged_in' not in session:
+        return redirect('/login')
+    db = connect_db()
+    reviewData = db.query(ReviewData).filter(ReviewData.user_id==session['user_id']).all()
+    db.close()
+    return render_template('dashboard.html',data= reviewData)
 
-            # First box: # of reviews limit
-            # Second box: File name
+@app.route('/download/<path:filename>', methods=['GET','POST'])
+def downloadFile(filename):
+    print(filename)
+    return send_file(filename, as_attachment=True)
 
 
 #nm in the return statement above is a variable that can be used in html
 if __name__ == '__main__':
     app.run(debug = True) # run this server in a testing mode
-    
-# Tasks
-# Clean up UI
-# Fill out login information - remove old things that I tested, or make a simple page
-# and not remove everything
 
 # Notes
 # jsonify: asynchronous (sending chunks of information without reloading the page) sending to form. Handled by JavaScript

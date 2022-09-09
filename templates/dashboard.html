@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container mx-auto">
+    <div class="overflow-x-auto">
+        <table class="table table-compact w-full">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>File</th>
+                    <th>collected_at</th>
+                    <th>Link</th>
+                    <th>Download</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    <th>{{row.id}}</th>
+                    <td><b>{{row.filepath.split('/')[-1]}}</b></td>
+                    <td>{{row.created_at.date()}}</td>
+                    <td><a href="{{row.product_url}}" target="_blank" rel="noopener noreferrer">Visit product reviews</a></td>
+                    <td><a href="/download/{{row.filepath}}">⬇️ Download file</a></td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+
+{% endblock %}

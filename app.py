@@ -60,10 +60,10 @@ def register_ajax_handler():
     cpassword = request.form.get('cpassword')
     if len(name)<3:
         return jsonify({"status":"error","message":"Username must be atleast 3 characters"})
-    elif len(email)<    10 or '@' not in email:
+    elif len(email) < 10 or '@' not in email:
         return jsonify({"status":"error","message":"Invalid email"})
     elif len(password)<6:
-        return jsonify({"status":"error","message":"Password must be atleast 6 characters"})
+        return jsonify({"status":"error","message":"Password must be at least 6 characters"})
     elif password != cpassword:
         return jsonify({"status":"error","message":"Passwords do not match"})
     else:

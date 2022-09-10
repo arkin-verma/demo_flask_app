@@ -2,21 +2,21 @@
 
 
 {% block content %}
-<div class="container mx-auto">
-  <form method="post" id="form1" class="mx-auto">
+<div class="py-28 container mx-auto flex content-center">
+  <form method="post" id="form1" class="mx-auto  w-96">
     <!-- sm here is the  size of item, we have options xs,sm,md,lg -->
     <div class="form-control w-full max-w-xs">
       <label class="label" for="fullname">
         <span class="label-text">Username</span>
       </label>
-      <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-sm" name="username"
+      <input type="text" placeholder="Type here" class="input input-lg input-bordered w-full max-w-xs" name="username"
         id="fullname" />
     </div>
     <div class="form-control w-full max-w-xs">
       <label class="label" for="email">
         <span class="label-text">Email Address</span>
       </label>
-      <input type="email" placeholder="Type email here" class="input input-bordered w-full max-w-xs" name="email"
+      <input type="email" placeholder="Type email here" class="input input-lg input-bordered w-full max-w-xs" name="email"
         id="email" />
     </div>
     <div class="form-control w-full max-w-xs">
@@ -24,7 +24,7 @@
         <span class="label-text">Create a new password</span>
         <span class="label-text-alt">min 8 chars</span>
       </label>
-      <input type="password" placeholder="Type password here" class="input input-bordered w-full max-w-xs"
+      <input type="password" placeholder="Type password here" class="input input-lg input-bordered w-full max-w-xs"
         name="password" id="password" />
     </div>
     <div class="form-control w-full max-w-xs">
@@ -32,7 +32,7 @@
         <span class="label-text">Confirm Password</span>
         <span class="label-text-alt">min 8 chars</span>
       </label>
-      <input type="password" placeholder="Type confirmation password here" class="input input-bordered w-full max-w-xs"
+      <input type="password" placeholder="Type confirmation password here" class="input input-lg input-bordered w-full max-w-xs"
         name="cpassword" id="cpassword" />
     </div>
     <div class="form-control w-full max-w-xs my-3">
@@ -55,6 +55,7 @@
       pb.removeClass('invisible');
       url = '/register_api'
       // add a delay for 2 sec
+      // Future edit: move to next page once user is registered
       setTimeout(() => {
         $.ajax({
           url: url,

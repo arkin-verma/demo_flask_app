@@ -2,29 +2,29 @@
 
 
 {% block content %}
-<div class="container mx-auto">
+<div class="py-28 container mx-auto flex content-center">
     <form method="post" id="form3" class="mx-auto">
         <!-- sm here is the  size of item, we have options xs,sm,md,lg -->
-        <h1>Collect Reviews of Product from Amazon</h1>
+        <!-- <h1 style="font-size:2vw">Collect Reviews of Product from Amazon</h1> -->
         <div class="form-control w-full">
             <label class="label" for="product_title">
                 <span class="label-text">Product Title</span>
             </label>
-            <input type="name" placeholder="Type Product Title here" class="input input-bordered w-full max-w-xs" name="product_title"
+            <input type="name" placeholder="Type Product Title here" class="input input-lg input-bordered w-full max-w-xs" name="product_title"
                 id="product_title" />
         </div>
         <div class="form-control w-full">
             <label class="label" for="page_limit">
                 <span class="label-text">Page Limit</span>
             </label>
-            <input type="limit" placeholder="Type Page Limit here" class="input input-bordered w-full max-w-xs" name="page_limit"
+            <input type="limit" placeholder="Type Page Limit here" class="input input-lg input-bordered w-full max-w-xs" name="page_limit"
                 id="page_limit" />
         </div>
         <div class="form-control w-full">
             <label class="label" for="product_url">
                 <span class="label-text">Product URL</span>
             </label>
-            <input type="url" placeholder="Type Product URL here" class="input input-bordered w-full max-w-xs" name="product_url"
+            <input type="url" placeholder="Type Product URL here" class="input input-lg input-bordered w-full max-w-xs" name="product_url"
                 id="product_url" />
         </div>
         <div class="form-control w-full max-w-xs my-3">

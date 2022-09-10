@@ -1,8 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="hero min-h-screen bg-base-200">
+	<div class="hero-content text-center">
+	  <div class="max-w-md">
+		<h1 class="text-5xl font-bold">Amazon Reviews: Data Miner</h1>
+		<p class="py-6">Find, mine, and obtain reviews for any Amazon product. Just input a URL for any Amazon product—it's that easy.</p>
+		<div class="btn-group btn-group-vertical">
+			{% if session.is_logged_in %}
 
-<style>
+			<a class="btn btn-warning" href="/startmining">Start Mining</a>
+			<a class="btn btn-success" href="/dashboard">Dashboard</a>
+
+			{% else %}
+			<a class="btn btn-warning" href="/register">Register</a>
+			<a class="btn btn-success" href="/login">Log In</a>
+			{% endif %}
+		</div>
+	  </div>
+	</div>
+  </div>
+<!-- <style>
 	.section-1{
 	  text-decoration:dotted;
 	  font-family: Lucida Sans;
@@ -12,7 +30,7 @@
 
 <h1>Welcome to my code example</h1>
 	<p>Variable from server: {{nm}}</p>
-	<p style="color:red">{{task}}</p>
+	<p style="color:red">{{task}}</p> -->
 	<!-- <p class="section-1">
 		visit our <a href="/news">News Page</a>
 	</p>

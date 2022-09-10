@@ -74,10 +74,6 @@ def register_ajax_handler():
         db.close()
         return jsonify({"status":"success","message":"User created successfully"})
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 84130a900b0b10a429fc8664a789f38c0b0a9a22
 @app.route('/register', methods=['GET', 'POST'])
 def register_handler():
     return render_template('form_1.html')
@@ -193,28 +189,12 @@ def downloadFile(filename):
     print(filename)
     return send_file(filename, as_attachment=True)
 
-@app.route('/dashboard')
-def dashboard():
-    if 'is_logged_in' not in session:
-        return redirect('/login')
-    db = connect_db()
-    reviewData = db.query(ReviewData).filter(ReviewData.user_id==session['user_id']).all()
-    db.close()
-    return render_template('dashboard.html',data= reviewData)
-
-@app.route('/download/<path:filename>', methods=['GET','POST'])
-def downloadFile(filename):
-    print(filename)
-    return send_file(filename, as_attachment=True)
-
 if __name__ == '__main__':
     app.run(debug = True) # run this server in a testing mode
-<<<<<<< HEAD
+
 
 # Notes
 # jsonify: asynchronous (sending chunks of information without reloading the page) sending to form. Handled by JavaScript
 # sending tiny bit of data back to server from the client
 # Fix the UI on the pages (specifically the front page)
-=======
-    
->>>>>>> 84130a900b0b10a429fc8664a789f38c0b0a9a22
+
